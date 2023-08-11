@@ -1,0 +1,68 @@
+﻿@model PlatosViewModel
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Editar Plato</h1>
+
+<h4>PlatosModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagenSubida" class="control-label d-block"></label>
+                @try
+                {
+                    string base64Imagen = Convert.ToBase64String(Model.Imagen);
+                    string imagenDataUrl = $"data:image/jpeg;base64,{base64Imagen}";
+
+                    <img class="producto-imagen img-thumbnail img-fluid d-block" src="@imagenDataUrl" alt="Imagen" />
+                }
+                catch (ArgumentNullException)
+                {
+
+                }
+                <input asp-for="ImagenSubida" class="form-control" />
+                <span asp-validation-for="ImagenSubida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoriaNombre" class="control-label"></label>
+                <select asp-for="CategoriaNombre" class="form-select">
+                    <option value="">Por favor seleccione una opción...</option>
+                    <option value="Local">Local</option>
+                    <option value="Extranjero">Extranjero</option>
+                </select>
+                <span asp-validation-for="CategoriaNombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

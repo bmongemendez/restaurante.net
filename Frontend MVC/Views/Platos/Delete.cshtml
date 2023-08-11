@@ -1,0 +1,60 @@
+﻿@model PlatosViewModel
+
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+<h1>Eliminar Plato</h1>
+
+<h3>¿Seguro que deseas eliminarlo?</h3>
+<div>
+    <h4>PlatosModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Imagen)
+        </dt>
+        <dd class="col-sm-10">
+            @try
+            {
+                string base64Imagen = Convert.ToBase64String(Model.Imagen);
+                string imagenDataUrl = $"data:image/jpeg;base64,{base64Imagen}";
+
+                <img class="producto-imagen img-thumbnail img-fluid d-block" src="@imagenDataUrl" alt="Imagen" />
+            }
+            catch (ArgumentNullException)
+            {
+
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoriaNombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CategoriaNombre)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

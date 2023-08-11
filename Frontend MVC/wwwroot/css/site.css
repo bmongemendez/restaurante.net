@@ -1,0 +1,22 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.main-container {
+    padding-bottom: 150px;
+}
+
+.footer {
+    height: 150px;
+}
+
+.producto-imagen {
+    width: 150px;
+    min-width: 150px;
+}

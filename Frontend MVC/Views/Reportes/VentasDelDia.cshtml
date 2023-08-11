@@ -1,0 +1,93 @@
+﻿@model ReportesVentasViewModel
+
+@{
+    ViewData["Title"] = "Ventas del Día";
+}
+
+<h4>Ventas del día</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="VentasDia">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FechaDia" class="control-label"></label>
+                <input type="date" asp-for="FechaDia" class="form-control" />
+                <span asp-validation-for="FechaDia" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Generar Reporte" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@if (ViewBag.ventas != null)
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumeroOrden)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FechaHora)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CantidadVendida)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Plato)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Imagen)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ReportesVentasViewModel item in @ViewBag.ventas)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumeroOrden)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaHora)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CantidadVendida)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Plato)
+                        </td>
+                        <td>
+                            @try
+                            {
+                                string base64Imagen = Convert.ToBase64String(item.Imagen);
+                                string imagenDataUrl = $"data:image/jpeg;base64,{base64Imagen}";
+
+                                <img class="producto-imagen img-thumbnail img-fluid" src="@imagenDataUrl" alt="Imagen" />
+                            }
+                            catch (ArgumentNullException)
+                            {
+                                <span>X</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning d-flex align-items-center mt-3" role="alert">
+        <div>
+            No se encontraron registros.
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

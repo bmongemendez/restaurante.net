@@ -1,0 +1,70 @@
+﻿@model IEnumerable<VentasViewModel>
+
+@{
+    ViewData["Title"] = "Ventas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Agregar</a>
+</p>
+
+@{
+    if (Model.Count() > 0)
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumeroOrden)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FechaHora)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Plato)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CantidadVendida)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumeroOrden)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaHora)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Plato)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CantidadVendida)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.NumeroOrden }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.NumeroOrden }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning d-flex align-items-center mt-3" role="alert">
+            <div>
+                No se encontraron registros.
+            </div>
+        </div>
+    }
+
+}
